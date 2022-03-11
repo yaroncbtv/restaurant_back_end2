@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "restaurant_back_end2", "restaurant_back_end2\restaurant_back_end2.csproj", "{477DE58F-5634-45EC-B8BF-3690861EA778}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDataAccess", "EFDataAccess\EFDataAccess.csproj", "{971217B4-9363-46A6-9021-D4311CA88B93}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{477DE58F-5634-45EC-B8BF-3690861EA778}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{477DE58F-5634-45EC-B8BF-3690861EA778}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{477DE58F-5634-45EC-B8BF-3690861EA778}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{477DE58F-5634-45EC-B8BF-3690861EA778}.Release|Any CPU.Build.0 = Release|Any CPU
+		{971217B4-9363-46A6-9021-D4311CA88B93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{971217B4-9363-46A6-9021-D4311CA88B93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{971217B4-9363-46A6-9021-D4311CA88B93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{971217B4-9363-46A6-9021-D4311CA88B93}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {31EF40B0-E759-480E-B43A-B5FA1EA59D37}
+	EndGlobalSection
+EndGlobal
