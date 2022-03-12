@@ -12,7 +12,8 @@ namespace EFDataAccess.Models
         public string name { get; set; }
         public string lastName { get; set; }
         public string age { get; set; }
+        public string email { get; set; }
 
-        public List<Email> Emails { get; set; } = new List<Email>();
+        //public List<Email> Emails { get; set; } = new List<Email>();
     }
 }

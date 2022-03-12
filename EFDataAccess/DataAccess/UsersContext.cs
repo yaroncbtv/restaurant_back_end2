@@ -16,6 +16,6 @@ namespace EFDataAccess.DataAccess
 
         public UsersContext(DbContextOptions<UsersContext> options) : base(options) { }
         public DbSet<Users> user { get; set; }
-        public DbSet<Email> email { get; set; }
+        //public DbSet<Email> email { get; set; }
     }
 }
