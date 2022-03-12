@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
-using System.Web.Http.Cors;
 
 namespace restaurant_back_end2.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
 
     public class UsersAction : Controller
     {
