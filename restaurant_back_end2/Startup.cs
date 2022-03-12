@@ -27,9 +27,9 @@ namespace restaurant_back_end2
         {
             services.AddDbContext<UsersContext>(options =>
             {
-                
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
+            services.AddControllers();
             services.AddControllersWithViews();
         }
 

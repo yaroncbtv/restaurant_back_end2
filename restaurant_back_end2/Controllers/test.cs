@@ -1,16 +1,37 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EFDataAccess.DataAccess;
+using EFDataAccess.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 
 namespace restaurant_back_end2.Controllers
 {
+    
     public class test : Controller
     {
+        private UsersContext _usersContext;
         // GET: test
+        public test(UsersContext usersContext)
+        {
+            _usersContext = usersContext;
+        }
         public ActionResult Index()
         {
             
+            return View();
+        }
+        [HttpGet]
+        public ActionResult AddPepole()
+        {
+            Users user = new Users();
+            //user.Id = 123;
+            user.name = "yaron";
+            user.age = "123";
+            user.lastName = "cohen";
+            _usersContext.user.AddRange(user);
+            _usersContext.SaveChanges();
+
             return View();
         }
 
