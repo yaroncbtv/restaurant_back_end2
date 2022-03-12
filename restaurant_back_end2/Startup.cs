@@ -29,6 +29,13 @@ namespace restaurant_back_end2
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
+            services.AddCors(o => o.AddPolicy("AllowAnyCorsPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddControllers();
             services.AddControllersWithViews();
         }
@@ -49,7 +56,7 @@ namespace restaurant_back_end2
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseCors("AllowAnyCorsPolicy");
             app.UseRouting();
 
             app.UseAuthorization();
