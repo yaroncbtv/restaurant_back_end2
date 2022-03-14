@@ -9,10 +9,8 @@ namespace EFDataAccess.Models
     public class Users
     {
         public int Id { get; set; }
-        public string name { get; set; }
-        public string lastName { get; set; }
-        public string age { get; set; }
-        public string email { get; set; }
+        public string fullname { get; set; }
+        public string phone { get; set; }
 
         //public List<Email> Emails { get; set; } = new List<Email>();
     }

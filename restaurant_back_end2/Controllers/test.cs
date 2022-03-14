@@ -10,7 +10,7 @@ namespace restaurant_back_end2.Controllers
     
     public class test : Controller
     {
-        private UsersContext _usersContext;
+        private readonly UsersContext _usersContext;
         // GET: test
         public test(UsersContext usersContext)
         {
@@ -26,9 +26,9 @@ namespace restaurant_back_end2.Controllers
         {
             Users user = new Users();
             //user.Id = 123;
-            user.name = "yaron";
-            user.age = "123";
-            user.lastName = "cohen";
+            //user.name = "yaron";
+            //user.age = "123";
+            //user.lastName = "cohen";
             _usersContext.user.AddRange(user);
             _usersContext.SaveChanges();
 
