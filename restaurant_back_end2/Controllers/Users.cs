@@ -3,6 +3,7 @@ using EFDataAccess.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 using System.Linq;
@@ -14,10 +15,19 @@ namespace restaurant_back_end2.Controllers
     {
         // GET: UsersAction
         private readonly UsersContext _usersContext;
+        public IConfiguration Configuration { get; }
         // GET: test
-        public UsersAction(UsersContext usersContext)
+        //public UsersAction(IConfiguration configuration)
+
+        //{
+
+        //    Configuration = configuration;
+
+        //}
+        public UsersAction(UsersContext usersContext, IConfiguration configuration)
         {
             _usersContext = usersContext;
+            Configuration = configuration;
         }
         [HttpPost]
 
@@ -26,6 +36,7 @@ namespace restaurant_back_end2.Controllers
             
             try
             {
+                var test2 = Configuration.GetSection("test").Value;
                 //if (_usersContext.user.Any(p => p.phone == data.phone)) return Json("User is Exsis");
                 var test = _usersContext.user.Where(p => p.phone == data.phone).ToList();
                 //if (String.IsNullOrEmpty(test)) return Json("User is Exsis");
