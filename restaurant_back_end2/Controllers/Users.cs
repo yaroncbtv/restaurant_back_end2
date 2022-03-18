@@ -26,8 +26,9 @@ namespace restaurant_back_end2.Controllers
             
             try
             {
-                if (_usersContext.user.Any(p => p.phone == data.phone)) return Json("User is Exsis");
-
+                //if (_usersContext.user.Any(p => p.phone == data.phone)) return Json("User is Exsis");
+                var test = _usersContext.user.Where(p => p.phone == data.phone).ToList();
+                //if (String.IsNullOrEmpty(test)) return Json("User is Exsis");
                 Users user = new Users();
 
                 user.fullname = data.fullname;
