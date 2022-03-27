@@ -50,12 +50,14 @@ namespace restaurant_back_end2.Controllers
             }
             catch (Exception e)
             {
+                
                 return Json("Error! " + e.Message);
             }
             
         }
         public ActionResult Index()
         {
+            var test = Configuration.GetSection("test2").GetValue<string>("test");
             return View();
         }
 
