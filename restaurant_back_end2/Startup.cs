@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EFDataAccess.Data;
+using restaurant_back_end2.Helpers;
 
 namespace restaurant_back_end2
 {
@@ -33,11 +35,17 @@ namespace restaurant_back_end2
             {
                 builder.AllowAnyOrigin()
                        .AllowAnyMethod()
-                       .AllowAnyHeader();
+                       .AllowAnyHeader()
+                       
+                       ;
             }));
+
 
             services.AddControllers();
             services.AddControllersWithViews();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<JwtService>();
         }
 
 

@@ -44,6 +44,7 @@ namespace restaurant_back_end2.Controllers
 
                 user.fullname = data.fullname;
                 user.phone = data.phone;
+                user.password = data.password;
                 _usersContext.user.AddRange(user);
                 _usersContext.SaveChanges();
                 return Json("Succsses Create New User!");
@@ -139,4 +140,5 @@ public class NewUser
 {
     public string fullname { get; set; }
     public string phone { get; set; }
+    public string password { get; set; }
 }
