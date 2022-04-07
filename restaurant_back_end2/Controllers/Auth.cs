@@ -6,7 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using restaurant_back_end2.Classes;
 using restaurant_back_end2.Helpers;
+using restaurant_back_end2.Service;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace restaurant_back_end2.Controllers
 {
@@ -16,73 +19,58 @@ namespace restaurant_back_end2.Controllers
         private readonly UsersContext _usersContext;
         private readonly IUserRepository _repository;
         private readonly JwtService _jwtService;
+        private readonly IRegisterService _registerService;
+        private readonly ILoginService _loginService;
         public IConfiguration Configuration { get; }
         // GET: Auth
 
-        public Auth(UsersContext usersContext, IConfiguration configuration, IUserRepository repository, JwtService jwtService)
+        public Auth(
+            UsersContext usersContext, 
+            IConfiguration configuration, 
+            IUserRepository repository, 
+            JwtService jwtService,
+            IRegisterService registerService,
+            ILoginService loginservice
+            )
         {
             _usersContext = usersContext;
             Configuration = configuration;
             _repository = repository;
             _jwtService = jwtService;
+            _registerService = registerService;
+            _loginService = loginservice;
         }
         public ActionResult Index()
         {
             return View();
         }
 
-
-
         [HttpPost("register")]
-        public ActionResult Register([FromBody] RegisterDto dto)
+        public async Task<ActionResult> Register([FromBody] RegisterDto dto)
         {
-
-
-            var user = new Users
-                (
-                   dto.fullname,
-                   dto.phone,
-                   BCrypt.Net.BCrypt.HashPassword(dto.password)
-                );
-
-            //_usersContext.user.Add(user);
-            //_usersContext.SaveChanges();
-
-            _repository.Create(user);
-
-            return Created("Succsses!", user);
+            IsSucessesRegister isSucessesRegister = await _registerService.AddUser(dto);
+            return Json(Newtonsoft.Json.JsonConvert.SerializeObject(isSucessesRegister));
         }
+
         [HttpPost("login")]
-        public ActionResult Login([FromBody] LoginDto dto)
+        public async Task<ActionResult> Login([FromBody] LoginDto dto)
         {
-
-            var user = _repository.GetByPhone(dto.phone);
-
-            if (user == null) return BadRequest(new { message = "Invalid Credentials" });
-
-            if (!BCrypt.Net.BCrypt.Verify(dto.password, user.password)) 
+            UserLogin userLogin = await _loginService.LoginUser(dto);
+            
+            Response.Cookies.Append("jwt", userLogin.jwt, new CookieOptions
             {
-                return BadRequest(new { message = "Invalid Credentials" });
-
-            }
-
-            var jwt = _jwtService.Generate(user.Id);
-
-
-            Response.Cookies.Append("jwt", jwt, new CookieOptions
-            {
-                HttpOnly = true
+                HttpOnly = true,
+                //Secure = true,
+                //SameSite = SameSiteMode.None
             });
 
-            return Ok(new
-            {
-                message = "success"
-            });
+            return Json(Newtonsoft.Json.JsonConvert.SerializeObject(userLogin));
         }
         [HttpGet("getuserdata")]
         public ActionResult GetUserData()
         {
             try
+            
             {
                 var jwt = Request.Cookies["jwt"];
                 var token = _jwtService.Verify(jwt);

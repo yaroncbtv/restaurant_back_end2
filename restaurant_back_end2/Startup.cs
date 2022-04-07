@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EFDataAccess.Data;
 using restaurant_back_end2.Helpers;
+using restaurant_back_end2.Service;
 
 namespace restaurant_back_end2
 {
@@ -31,20 +32,23 @@ namespace restaurant_back_end2
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
-            services.AddCors(o => o.AddPolicy("AllowAnyCorsPolicy", builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader()
-                       
-                       ;
-            }));
+            //services.AddCors(o => o.AddPolicy("AllowAnyCorsPolicy", builder =>
+            //{
+            //    builder.AllowAnyOrigin()
+            //           .AllowAnyMethod()
+            //           .AllowAnyHeader()
 
+            //           ;
+            //}));
 
+            services.AddCors();
             services.AddControllers();
             services.AddControllersWithViews();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRegisterService, RegisterService>();
+            services.AddScoped<ILoginService, LoginService>();
+
             services.AddScoped<JwtService>();
         }
 
@@ -64,7 +68,14 @@ namespace restaurant_back_end2
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCors("AllowAnyCorsPolicy");
+            //app.UseCors("AllowAnyCorsPolicy");
+            
+            app.UseCors(options => options
+               .WithOrigins(new[] { "http://localhost:3000", "http://localhost:8080", "http://localhost:4200" })
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials()
+           );
             app.UseRouting();
 
             app.UseAuthorization();
