@@ -56,13 +56,17 @@ namespace restaurant_back_end2.Controllers
         public async Task<ActionResult> Login([FromBody] LoginDto dto)
         {
             UserLogin userLogin = await _loginService.LoginUser(dto);
-            
-            Response.Cookies.Append("jwt", userLogin.jwt, new CookieOptions
+
+            if (dto.stayLogin)
             {
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.None
-            });
+                Response.Cookies.Append("jwt", userLogin.jwt, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None
+                });
+            }
+            
             //return Ok(new
             //{
             //    message = "success"
@@ -76,12 +80,19 @@ namespace restaurant_back_end2.Controllers
             
             {
                 var jwt = Request.Cookies["jwt"];
+
+                if(jwt == null)
+                    return Unauthorized(-1);
+                
+
                 var token = _jwtService.Verify(jwt);
 
                 int userId = int.Parse(token.Issuer);
 
                 var user = _repository.GetById(userId);
-                return Ok(user);
+
+                return Json(Newtonsoft.Json.JsonConvert.SerializeObject(user));
+                //return Ok(user);
             }
             catch (Exception ex)
             {
@@ -92,13 +103,34 @@ namespace restaurant_back_end2.Controllers
 
         // GET: Auth/Create
         [HttpPost("logout")]
-        public ActionResult Logout()
+        public async Task<ActionResult> Logout()
         {
-            Response.Cookies.Delete("jwt");
-            return Ok(new
-            {
-                message = "sucsses"
-            });
+            //Response.Cookies.Delete("jwt");
+            //Response.Cookies.Append("jwt", "", new CookieOptions
+            //{
+            //    HttpOnly = true,
+            //    Secure = true,
+            //    SameSite = SameSiteMode.None
+            //});
+
+            CookieOptions option = new CookieOptions();
+
+            option.Expires = DateTime.Now.AddDays(-100000);
+
+            option.HttpOnly = true;
+
+            option.Secure = true;
+
+            option.IsEssential = true;
+
+            option.SameSite = SameSiteMode.None;
+
+            Response.Cookies.Append("jwt", string.Empty, option);
+
+            //Then delete the cookie
+
+            //Response.Cookies.Delete(cookie);
+            return Json("OK");
         }
 
         // POST: Auth/Create
