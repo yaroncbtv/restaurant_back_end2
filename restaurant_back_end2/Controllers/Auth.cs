@@ -60,10 +60,13 @@ namespace restaurant_back_end2.Controllers
             Response.Cookies.Append("jwt", userLogin.jwt, new CookieOptions
             {
                 HttpOnly = true,
-                //Secure = true,
-                //SameSite = SameSiteMode.None
+                Secure = true,
+                SameSite = SameSiteMode.None
             });
-
+            //return Ok(new
+            //{
+            //    message = "success"
+            //});
             return Json(Newtonsoft.Json.JsonConvert.SerializeObject(userLogin));
         }
         [HttpGet("getuserdata")]

@@ -70,13 +70,15 @@ namespace restaurant_back_end2
             app.UseStaticFiles();
             //app.UseCors("AllowAnyCorsPolicy");
             
+            
+            app.UseRouting();
+
             app.UseCors(options => options
                .WithOrigins(new[] { "http://localhost:3000", "http://localhost:8080", "http://localhost:4200" })
                .AllowAnyHeader()
                .AllowAnyMethod()
                .AllowCredentials()
            );
-            app.UseRouting();
 
             app.UseAuthorization();
 
