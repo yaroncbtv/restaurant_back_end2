@@ -48,7 +48,10 @@ namespace restaurant_back_end2
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRegisterService, RegisterService>();
             services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IAddUserOfferService, AddUserOfferService>();
+            services.AddScoped<IAddPostsService, AddPostsService>();
 
+            
             services.AddScoped<JwtService>();
         }
 

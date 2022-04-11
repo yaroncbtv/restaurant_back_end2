@@ -3,14 +3,16 @@ using EFDataAccess.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFDataAccess.Migrations
 {
     [DbContext(typeof(UsersContext))]
-    partial class UsersContextModelSnapshot : ModelSnapshot
+    [Migration("20220411112940_addContentPostTable")]
+    partial class addContentPostTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,12 +30,6 @@ namespace EFDataAccess.Migrations
                     b.Property<string>("content")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("maxOffer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("startOffer")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("contentPosts");
@@ -46,13 +42,13 @@ namespace EFDataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("bestOfferUserPhone")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("postId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("userOffer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("userPhone")
+                    b.Property<string>("startOffer")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

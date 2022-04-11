@@ -125,6 +125,7 @@ namespace restaurant_back_end2.Controllers
 
             option.SameSite = SameSiteMode.None;
 
+
             Response.Cookies.Append("jwt", string.Empty, option);
 
             //Then delete the cookie
