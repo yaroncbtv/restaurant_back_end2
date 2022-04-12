@@ -13,7 +13,7 @@ namespace restaurant_back_end2.Service
 
     public interface IAddUserOfferService
     {
-        public Task<Posts> AddUserOffer(PostsDto dto);
+        public Task<int> AddUserOffer(PostsDto dto);
     }
     public class AddUserOfferService : IAddUserOfferService
     {
@@ -26,7 +26,7 @@ namespace restaurant_back_end2.Service
             Configuration = configuration;
         }
 
-        public async Task<Posts> AddUserOffer(PostsDto dto)
+        public async Task<int> AddUserOffer(PostsDto dto)
         {
             Posts maxOffer = new Posts();
             try
@@ -36,6 +36,7 @@ namespace restaurant_back_end2.Service
                        dto.postId,
                        dto.userPhone,
                        dto.userOffer
+                       
                     );
             _usersContext.post.Add(userPost);
             _usersContext.SaveChanges();
@@ -59,14 +60,18 @@ namespace restaurant_back_end2.Service
                             }
                         } 
                     }
-                    allOfferPosts[index].maxOffer = maxOffer.userOffer;
-                    _usersContext.SaveChanges();
+                    if (int.Parse(allOfferPosts[index].maxOffer) < int.Parse(maxOffer.userOffer))
+                    {
+                        allOfferPosts[index].maxOffer = maxOffer.userOffer;
+                        allOfferPosts[index].winUser = maxOffer.userPhone;
+                        _usersContext.SaveChanges();
+                    }      
                 }
-                return maxOffer;
+                return 1;
             }
             catch (Exception ex)
             {
-                return maxOffer;
+                return 0;
             }
         }
     }

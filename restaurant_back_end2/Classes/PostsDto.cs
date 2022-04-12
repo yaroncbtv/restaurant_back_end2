@@ -12,5 +12,6 @@
         public string content { get; set; }
         public string maxOffer { get; set; }
         public string startOffer { get; set; }
+        public string header { get; set; }
     }
 }

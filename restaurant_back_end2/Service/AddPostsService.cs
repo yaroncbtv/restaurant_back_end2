@@ -22,6 +22,11 @@ namespace restaurant_back_end2.Service
             Configuration = configuration;
         }
 
+        public class RespToSend
+        {
+            public string message { get; set; }
+            public int isSucsses { get; set; }
+        }
         public async Task<int> AddPost(AddPostsDto dto)
         {
             try
@@ -30,7 +35,9 @@ namespace restaurant_back_end2.Service
                    (
                       dto.content,
                       dto.startOffer,
-                      dto.maxOffer
+                      dto.maxOffer,
+                      dto.header
+
                    );
                 _usersContext.contentPosts.Add(addPost);
                 _usersContext.SaveChanges();

@@ -32,17 +32,29 @@ namespace EFDataAccess.Models
         {
 
         }
-        public ContentPosts(string content, string startOffer, string maxOffer)
+        public ContentPosts(string content, string startOffer, string maxOffer, string header, string winUser)
         {
             this.content = content;
             this.startOffer = startOffer;
             this.maxOffer = maxOffer;
+            this.header = header;
+            this.winUser = winUser;
+        }
+        public ContentPosts(string content, string startOffer, string maxOffer, string header)
+        {
+            this.content = content;
+            this.startOffer = startOffer;
+            this.maxOffer = maxOffer;
+            this.header = header;
+           
         }
         public int Id { get; set; }
 
         public string content { get; set; }
         public string startOffer { get; set; }
         public string maxOffer { get; set; }
+        public string header { get; set; }
+        public string winUser { get; set; }
 
     }
 }
