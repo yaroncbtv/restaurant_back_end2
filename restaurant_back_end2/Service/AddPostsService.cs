@@ -31,13 +31,15 @@ namespace restaurant_back_end2.Service
         {
             try
             {
+
                 var addPost = new ContentPosts
                    (
                       dto.content,
                       dto.startOffer,
-                      dto.maxOffer,
-                      dto.header
-
+                      dto.startOffer,
+                      dto.header,
+                      dto.endSale,
+                      ""
                    );
                 _usersContext.contentPosts.Add(addPost);
                 _usersContext.SaveChanges();

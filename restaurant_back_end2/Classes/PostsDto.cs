@@ -1,4 +1,7 @@
-﻿namespace restaurant_back_end2.Classes
+﻿using EFDataAccess.Models;
+using System.Collections.Generic;
+
+namespace restaurant_back_end2.Classes
 {
     public class PostsDto
     {
@@ -13,5 +16,12 @@
         public string maxOffer { get; set; }
         public string startOffer { get; set; }
         public string header { get; set; }
+        public string endSale { get; set; }
+    }
+
+    public class CombineContentPostsWithPosts
+    {
+       public ContentPosts contentPosts { get; set; }
+       public List<Posts> post { get; set; }
     }
 }
