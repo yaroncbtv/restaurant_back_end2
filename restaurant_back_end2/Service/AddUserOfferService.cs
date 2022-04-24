@@ -38,8 +38,10 @@ namespace restaurant_back_end2.Service
                        dto.userOffer
                        
                     );
-            _usersContext.post.Add(userPost);
-            _usersContext.SaveChanges();
+                if (String.IsNullOrEmpty(dto.userOffer)) return 0;
+                
+                _usersContext.post.Add(userPost);
+                _usersContext.SaveChanges();
 
 
             var allOfferPosts = _usersContext.contentPosts.Select(x => x).ToList();
