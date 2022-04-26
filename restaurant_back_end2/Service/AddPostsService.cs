@@ -4,12 +4,13 @@ using Microsoft.Extensions.Configuration;
 using restaurant_back_end2.Classes;
 using System;
 using System.Threading.Tasks;
+using static restaurant_back_end2.Service.AddPostsService;
 
 namespace restaurant_back_end2.Service
 {
     public interface IAddPostsService
     {
-        public Task<int> AddPost(AddPostsDto dto);
+        public Task<RespToSend> AddPost(AddPostsDto dto);
     }
     public class AddPostsService : IAddPostsService
     {
@@ -27,27 +28,50 @@ namespace restaurant_back_end2.Service
             public string message { get; set; }
             public int isSucsses { get; set; }
         }
-        public async Task<int> AddPost(AddPostsDto dto)
+        public async Task<RespToSend> AddPost(AddPostsDto dto)
         {
+            RespToSend respToSend = new RespToSend();
             try
             {
+                
 
+                if(String.IsNullOrEmpty(dto.content) ||
+                    String.IsNullOrEmpty(dto.startOffer) ||
+                    String.IsNullOrEmpty(dto.header) ||
+                    String.IsNullOrEmpty(dto.date) ||
+                    String.IsNullOrEmpty(dto.time)
+                  )
+                {
+                    respToSend.message = "all field is require!";
+                    respToSend.isSucsses = 0;
+
+                    return respToSend;
+                }
+
+                string endSale = dto.date + " " + dto.time;
                 var addPost = new ContentPosts
                    (
                       dto.content,
                       dto.startOffer,
                       dto.startOffer,
                       dto.header,
-                      dto.endSale,
-                      ""
+                      endSale,
+                      "0"
                    );
                 _usersContext.contentPosts.Add(addPost);
                 _usersContext.SaveChanges();
-                return 1; 
+
+                respToSend.message = "Sucssesfully add Post!";
+                respToSend.isSucsses = 1;
+
+                return respToSend; 
             }
             catch(Exception ex)
             {
-                return 0;
+                respToSend.message = ex.Message;
+                respToSend.isSucsses = 0;
+
+                return respToSend;
             }
         }
     }

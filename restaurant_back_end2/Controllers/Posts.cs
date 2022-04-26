@@ -56,21 +56,10 @@ namespace restaurant_back_end2.Controllers
         [HttpPost("addpost")]
         public async Task<ActionResult> AddPost([FromBody] AddPostsDto dto)
         {
-            int result = await _addPostsService.AddPost(dto);
-            RespToSend respToSend = new RespToSend();
-
-            if (result == 1)
-            {
-                respToSend.isSucsses = 1;
-                respToSend.message = "Sucssesfully Add the Post!";
-            }
-            else
-            {
-                respToSend.isSucsses = 0;
-                respToSend.message = "Error to add new post";
-            }
+            RespToSend respToSend = await _addPostsService.AddPost(dto); 
             return Json(Newtonsoft.Json.JsonConvert.SerializeObject(respToSend));
         }
+
 
         [HttpGet("getallpost")]
         public async Task<ActionResult> GetAllPost()

@@ -16,7 +16,8 @@ namespace restaurant_back_end2.Classes
         public string maxOffer { get; set; }
         public string startOffer { get; set; }
         public string header { get; set; }
-        public string endSale { get; set; }
+        public string date { get; set; }
+        public string time { get; set; }
     }
 
     public class CombineContentPostsWithPosts
