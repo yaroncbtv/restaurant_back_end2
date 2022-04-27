@@ -104,7 +104,9 @@ namespace restaurant_back_end2.Controllers
             }
             catch (Exception ex)
             {
-                return Json("Error!");
+                return Json("Error! " + ex.Message);
+
+                
             }
            
         }

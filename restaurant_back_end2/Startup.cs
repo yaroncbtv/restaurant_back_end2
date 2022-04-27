@@ -77,7 +77,8 @@ namespace restaurant_back_end2
             app.UseRouting();
 
             app.UseCors(options => options
-               .WithOrigins(new[] { "http://localhost:3000", "http://localhost:8080", "http://localhost:4200" })
+               //.WithOrigins(new[] { "http://localhost:3000", "http://localhost:8080", "http://localhost:4200", "https://6268e5cfd7761a00097815f8--sensational-lolly-4f3620.netlify.app" })
+               .SetIsOriginAllowed(origin => true)
                .AllowAnyHeader()
                .AllowAnyMethod()
                .AllowCredentials()
