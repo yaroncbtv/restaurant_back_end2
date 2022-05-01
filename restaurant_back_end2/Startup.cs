@@ -43,6 +43,8 @@ namespace restaurant_back_end2
 
             services.AddCors();
             services.AddControllers();
+            services.AddSwaggerGen();
+
             services.AddControllersWithViews();
 
             services.AddScoped<IUserRepository, UserRepository>();
@@ -50,8 +52,9 @@ namespace restaurant_back_end2
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IAddUserOfferService, AddUserOfferService>();
             services.AddScoped<IAddPostsService, AddPostsService>();
+            services.AddScoped<IGetAllPostService, GetAllPostService>();
 
-            
+
             services.AddScoped<JwtService>();
         }
 
@@ -59,6 +62,11 @@ namespace restaurant_back_end2
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Test1 Api v1");
+            });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -72,12 +80,14 @@ namespace restaurant_back_end2
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             //app.UseCors("AllowAnyCorsPolicy");
+
+           
             
-            
+
             app.UseRouting();
 
             app.UseCors(options => options
-               //.WithOrigins(new[] { "http://localhost:3000", "http://localhost:8080", "http://localhost:4200", "https://6268e5cfd7761a00097815f8--sensational-lolly-4f3620.netlify.app" })
+               .WithOrigins(new[] { "http://localhost:3000", "http://localhost:8080", "http://localhost:4200", "https://sensational-lolly-4f3620.netlify.app" })
                .SetIsOriginAllowed(origin => true)
                .AllowAnyHeader()
                .AllowAnyMethod()

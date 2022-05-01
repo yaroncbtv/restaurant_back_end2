@@ -19,6 +19,7 @@ namespace restaurant_back_end2.Controllers
         public IConfiguration Configuration { get; }
         private readonly IAddUserOfferService _addUserOfferService;
         private readonly IAddPostsService _addPostsService;
+        private readonly IGetAllPostService _getAllPostService;
    
         
 
@@ -26,13 +27,15 @@ namespace restaurant_back_end2.Controllers
             UsersContext usersContext,
             IConfiguration configuration,
             IAddUserOfferService addUserOfferService,
-            IAddPostsService addPostsService
+            IAddPostsService addPostsService,
+            IGetAllPostService getAllPostService
             )
         {
             _usersContext = usersContext;
             Configuration = configuration;
             _addUserOfferService = addUserOfferService;
             _addPostsService = addPostsService;
+            _getAllPostService = getAllPostService;
         }
         [HttpPost("adduseroffer")]
         public async Task<ActionResult> AddUserOffer([FromBody] PostsDto dto)
@@ -64,52 +67,15 @@ namespace restaurant_back_end2.Controllers
         [HttpGet("getallpost")]
         public async Task<ActionResult> GetAllPost()
         {
-            try
-            {
-                List<ContentPosts> allPost = _usersContext.contentPosts.Select(x => x).ToList();
-                List<Posts> allUserOffer = _usersContext.post.Select(x => x).ToList();
+            List<CombineContentPostsWithPosts> combineContentPostsWithPostsList = await _getAllPostService.GetAllPost();
 
-                List <CombineContentPostsWithPosts> combineContentPostsWithPostsList = new List<CombineContentPostsWithPosts>();
-                
-                
-                foreach (var item in allPost)
-                {
-                    CombineContentPostsWithPosts combineContentPostsWithPosts = new CombineContentPostsWithPosts();
-                    combineContentPostsWithPosts.post = new List<Posts>();
-                    combineContentPostsWithPosts.contentPosts = item;
-                    foreach (var data in allUserOffer)
-                    {
-                        if (item.Id == int.Parse(data.postId))
-                        {
-                            
-                            combineContentPostsWithPosts.post.Add(data);
-                        }
-                    }
-                    combineContentPostsWithPosts.post.Reverse();
-                    combineContentPostsWithPostsList.Add(combineContentPostsWithPosts);
-                }
-
-                    foreach (var item in allPost)
-                {
-                    DateTime now = Convert.ToDateTime(DateTime.Now.ToString("dddd, dd MMMM yyyy"));
-                    DateTime time = Convert.ToDateTime(item.endSale);
-                    if (time < now)
-                    {
-                        _usersContext.contentPosts.Remove(item);
-                        _usersContext.SaveChanges();
-                    }
-                }
-                
+            if (!String.IsNullOrEmpty(combineContentPostsWithPostsList[0].error))
+                return Json(combineContentPostsWithPostsList[0].error);
+            else
                 return Json(Newtonsoft.Json.JsonConvert.SerializeObject(combineContentPostsWithPostsList));
-            }
-            catch (Exception ex)
-            {
-                return Json("Error! " + ex.Message);
 
-                
-            }
-           
         }
+        [HttpGet("")]
         public IActionResult Index()
         {
             return View();

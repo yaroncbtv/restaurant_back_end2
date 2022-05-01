@@ -56,6 +56,7 @@ namespace restaurant_back_end2.Controllers
             }
             
         }
+        [HttpGet("")]
         public ActionResult Index()
         {
             var test = Configuration.GetSection("test2").GetValue<string>("test");
@@ -63,12 +64,14 @@ namespace restaurant_back_end2.Controllers
         }
 
         // GET: Users/Details/5
+        [HttpGet("Users/Details/{id}")]
         public ActionResult Details(int id)
         {
             return View();
         }
 
         // GET: Users/Create
+        [HttpGet("Users/Create")]
         public ActionResult Create()
         {
             return View();
@@ -88,35 +91,7 @@ namespace restaurant_back_end2.Controllers
                 return View();
             }
         }
-
-        // GET: Users/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Users/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Users/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Users/Delete/5
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

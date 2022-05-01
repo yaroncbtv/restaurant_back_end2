@@ -24,5 +24,6 @@ namespace restaurant_back_end2.Classes
     {
        public ContentPosts contentPosts { get; set; }
        public List<Posts> post { get; set; }
+       public string error { get; set; }
     }
 }
