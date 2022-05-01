@@ -57,6 +57,9 @@ namespace restaurant_back_end2.Controllers
         {
             UserLogin userLogin = await _loginService.LoginUser(dto);
 
+            if(userLogin.isSucesses != 1)
+                return Json(Newtonsoft.Json.JsonConvert.SerializeObject(userLogin));
+
             if (dto.stayLogin)
             {
                 Response.Cookies.Append("jwt", userLogin.jwt, new CookieOptions

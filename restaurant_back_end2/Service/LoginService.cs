@@ -36,6 +36,14 @@ namespace restaurant_back_end2.Service
         public async Task<UserLogin> LoginUser(LoginDto dto)
         {
             UserLogin userLogin = new UserLogin();
+
+            if (string.IsNullOrEmpty(dto.phone) || string.IsNullOrEmpty(dto.password))
+            {
+                userLogin.isSucesses = 0;
+                userLogin.message = "All fields is required!";
+                return userLogin;
+            }
+
             try
             {
                 var user = _repository.GetByPhone(dto.phone);
