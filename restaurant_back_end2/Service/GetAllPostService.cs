@@ -1,9 +1,11 @@
 ﻿using EFDataAccess.DataAccess;
 using EFDataAccess.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using restaurant_back_end2.Classes;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -40,7 +42,6 @@ namespace restaurant_back_end2.Service
                     {
                         if (item.Id == int.Parse(data.postId))
                         {
-
                             combineContentPostsWithPosts.post.Add(data);
                         }
                     }
@@ -54,6 +55,22 @@ namespace restaurant_back_end2.Service
                     DateTime time = Convert.ToDateTime(item.endSale);
                     if (time < now)
                     {
+                        SqlConnection con = new SqlConnection(Configuration.GetConnectionString("Default"));
+                        SqlCommand cmd = new SqlCommand("saveWinUsers", con);
+
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@content", item.content);
+                        cmd.Parameters.AddWithValue("@maxOffer", item.maxOffer);
+                        cmd.Parameters.AddWithValue("@startOffer", item.startOffer);
+                        cmd.Parameters.AddWithValue("@header", item.header);
+                        cmd.Parameters.AddWithValue("@winUser", item.winUser);
+                        cmd.Parameters.AddWithValue("@endSale", item.endSale);
+
+                        con.Open();
+                        int rowAffected = cmd.ExecuteNonQuery();
+                        con.Close();
+
                         _usersContext.contentPosts.Remove(item);
                         _usersContext.SaveChanges();
                     }
